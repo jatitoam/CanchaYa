@@ -1,0 +1,6 @@
+id,name,neighborhood,surfaceType,pricePerHour,currency,address,contactPhone,rating,amenities
+field_01,Camp Nou Synthetic Arena,Zona 10,Synthetic Grass,45.0,USD,"15 Calle 3-20, Zona 10",+502 5555-0191,4.8,Showers;Parking;Floodlights
+field_02,La Bombonera Turf,Zona 14,Synthetic Grass,50.0,USD,"Avenida Las Americas 10-50, Zona 14",+502 5555-0192,4.9,Parking;Cafeteria;Floodlights;Vending Machines
+field_03,San Siro Natural Pitch,Carretera a El Salvador,Natural Grass,60.0,USD,KM 16.5 Carretera a El Salvador,+502 5555-0193,4.6,Showers;Parking;Natural Turf Maintenance
+field_04,Maracaná Indoor Futsal,Zona 4,Indoor Wood,40.0,USD,"Ruta 3 4-25, Zona 4",+502 5555-0194,4.7,Locker Rooms;Showers;Cafeteria
+field_05,Santiago Bernabéu Synthetic,Zona 15,Synthetic Grass,55.0,USD,"Bulevar Vista Hermosa 22-10, Zona 15",+502 5555-0195,4.9,Parking;Floodlights;Spectator Stands;Drinks Bar
