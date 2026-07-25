@@ -1,0 +1,171 @@
+[
+  {
+    "id": "field_01",
+    "name": "Camp Nou Synthetic Arena",
+    "neighborhood": "Zona 10",
+    "surfaceType": "Synthetic Grass",
+    "pricePerHour": 45.00,
+    "currency": "USD",
+    "address": "15 Calle 3-20, Zona 10",
+    "contactPhone": "+502 5555-0191",
+    "rating": 4.8,
+    "amenities": ["Showers", "Parking", "Floodlights"],
+    "slots": [
+      {
+        "id": "slot_01_1",
+        "time": "2:00 PM - 3:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_01_2",
+        "time": "3:00 PM - 4:00 PM",
+        "status": "reserved",
+        "reservedBy": {
+          "name": "Carlos Gomez",
+          "phone": "+502 4433-2211"
+        }
+      },
+      {
+        "id": "slot_01_3",
+        "time": "4:00 PM - 5:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_01_4",
+        "time": "5:00 PM - 6:00 PM",
+        "status": "available",
+        "reservedBy": null
+      }
+    ]
+  },
+  {
+    "id": "field_02",
+    "name": "La Bombonera Turf",
+    "neighborhood": "Zona 14",
+    "surfaceType": "Synthetic Grass",
+    "pricePerHour": 50.00,
+    "currency": "USD",
+    "address": "Avenida Las Americas 10-50, Zona 14",
+    "contactPhone": "+502 5555-0192",
+    "rating": 4.9,
+    "amenities": ["Parking", "Cafeteria", "Floodlights", "Vending Machines"],
+    "slots": [
+      {
+        "id": "slot_02_1",
+        "time": "1:00 PM - 2:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_02_2",
+        "time": "2:00 PM - 3:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_02_3",
+        "time": "3:00 PM - 4:00 PM",
+        "status": "reserved",
+        "reservedBy": {
+          "name": "Alejandro Ruiz",
+          "phone": "+502 5999-8877"
+        }
+      }
+    ]
+  },
+  {
+    "id": "field_03",
+    "name": "San Siro Natural Pitch",
+    "neighborhood": "Carretera a El Salvador",
+    "surfaceType": "Natural Grass",
+    "pricePerHour": 60.00,
+    "currency": "USD",
+    "address": "KM 16.5 Carretera a El Salvador",
+    "contactPhone": "+502 5555-0193",
+    "rating": 4.6,
+    "amenities": ["Showers", "Parking", "Natural Turf Maintenance"],
+    "slots": [
+      {
+        "id": "slot_03_1",
+        "time": "3:00 PM - 4:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_03_2",
+        "time": "4:00 PM - 5:00 PM",
+        "status": "available",
+        "reservedBy": null
+      }
+    ]
+  },
+  {
+    "id": "field_04",
+    "name": "Maracaná Indoor Futsal",
+    "neighborhood": "Zona 4",
+    "surfaceType": "Indoor Wood",
+    "pricePerHour": 40.00,
+    "currency": "USD",
+    "address": "Ruta 3 4-25, Zona 4",
+    "contactPhone": "+502 5555-0194",
+    "rating": 4.7,
+    "amenities": ["Locker Rooms", "Showers", "Cafeteria"],
+    "slots": [
+      {
+        "id": "slot_04_1",
+        "time": "2:00 PM - 3:00 PM",
+        "status": "reserved",
+        "reservedBy": {
+          "name": "Sofia Mendez",
+          "phone": "+502 3322-1100"
+        }
+      },
+      {
+        "id": "slot_04_2",
+        "time": "3:00 PM - 4:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_04_3",
+        "time": "4:00 PM - 5:00 PM",
+        "status": "available",
+        "reservedBy": null
+      }
+    ]
+  },
+  {
+    "id": "field_05",
+    "name": "Santiago Bernabéu Synthetic",
+    "neighborhood": "Zona 15",
+    "surfaceType": "Synthetic Grass",
+    "pricePerHour": 55.00,
+    "currency": "USD",
+    "address": "Bulevar Vista Hermosa 22-10, Zona 15",
+    "contactPhone": "+502 5555-0195",
+    "rating": 4.9,
+    "amenities": ["Parking", "Floodlights", "Spectator Stands", "Drinks Bar"],
+    "slots": [
+      {
+        "id": "slot_05_1",
+        "time": "3:00 PM - 4:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_05_2",
+        "time": "4:00 PM - 5:00 PM",
+        "status": "available",
+        "reservedBy": null
+      },
+      {
+        "id": "slot_05_3",
+        "time": "5:00 PM - 6:00 PM",
+        "status": "available",
+        "reservedBy": null
+      }
+    ]
+  }
+]
