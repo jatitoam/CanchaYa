@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Editor / OS noise
+Thumbs.db
+*.swp
+
+# Secrets — never commit an API key
+.env
+.env.local
