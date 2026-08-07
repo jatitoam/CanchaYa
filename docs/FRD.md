@@ -1,132 +1,164 @@
-# Functional Requirements Document (FRD): Reserve a Field
+# Functional Requirements Document (FRD) — CanchaYa
 
-## Overview
+## Core feature
 
-This document describes how the "reserve a field" flow behaves in CanchaYa, screen by screen — what the
-organiser sees, what they can do, and what the app does in response. It is written to be specific enough
-that someone (or something) building the app does not have to guess.
+Find a field and see its available time slots.
 
-**Read the Build constraints section in `PRD.md` before this document.** The first version of CanchaYa is
-a static site: plain HTML, CSS and JavaScript reading `data/fields.json`. That decides what the app can
-actually do today, and the last section of this FRD says exactly which parts get built now and which wait
-for a back end.
+## Context
 
-## The data behind every screen
+CanchaYa is a directory of soccer and futsal fields in Guatemala City. The directory currently holds
+five fields. This document describes what the organiser sees and does on each screen, and how the
+screens connect to each other.
 
-Everything on screen comes from `data/fields.json`. Each field carries:
-
-`id` · `name` · `neighborhood` · `surfaceType` · `size` · `pricePerHour` · `currency` (`USD`) ·
-`address` · `contactPhone` · `rating` · `amenities` · and a nested `slots` array.
-
-Each slot carries: `id` · `time` (a range, e.g. `"2:00 PM - 3:00 PM"`) · `status` (`available` or
-`reserved`) · `reservedBy` (`null`, or a name and phone).
-
-Because `status` already lives in the data, the app can **show** which Saturday slots are taken. What it
-cannot yet do is **change** that status — see the last section.
+**Scope boundary — read this first.** This first version does not save anything. There are no
+accounts, no login and no reservation button. The organiser browses, reads and decides; reserving is
+done by phone, using the number shown on the field's screen. Nothing the organiser does on one visit
+is remembered on the next.
 
 ---
 
-## Screen 1 — Available fields
+## Screen 1 — Fields (home)
 
-The entry point. The organiser lands here and sees every field, with its open Saturday slots.
+### Purpose
 
-**What is shown — one card per field:**
+The entry point. Show every field in the directory at a glance, and let the organiser narrow the
+list down to the kind of field they are looking for.
 
-- Field name, and neighbourhood
-- Surface type and size (e.g. *Synthetic Grass · 7-a-side*)
-- Price per hour, in US dollars (e.g. *$45/hour*)
-- Rating
-- The field's Saturday slots, each showing its time range and whether it is **available** or **taken**
+### What the user sees
 
-**What the organiser can do:**
+- The CanchaYa name at the top of the screen.
+- A filter labelled **Surface**, offering **All** plus each surface type in the directory: Indoor
+  Wood, Natural Grass, Synthetic Grass.
+- One entry per field, and each entry shows:
+  - Field name
+  - Neighbourhood or zone (for example, *Zona 10*)
+  - Surface type
+  - Size (for example, *7-a-side*)
+  - Price per hour, in US dollars
+  - Rating
+  - How many of its time slots are still free (for example, *3 free slots*)
 
-- **Filter by surface type** — a dropdown listing every surface that appears in the data, plus "All".
-  Choosing one shows only fields with that surface.
-- **Tap an available slot** → go to Screen 2 with that field and slot carried across.
+### What the user does
 
-**Taken slots are shown but are not tappable.** Showing them is deliberate: an organiser who sees that
-3:00 PM is already gone learns something about how fast that field books up.
+- Chooses a surface in the filter. The list immediately shows only the fields with that surface.
+  Choosing **All** brings back the full list.
+- Chooses a field. This opens Screen 2 for that field.
 
-**Empty state:** if a filter matches no field, the list is replaced by *"No fields with that surface. Try
-another."* and the filter stays where it is, so the organiser can change it without starting over.
+### Where it goes
 
----
+Every field entry leads to **Screen 2 — Field detail**, for the field chosen.
 
-## Screen 2 — Confirm the reservation
+### Empty state
 
-Reached by tapping an available slot. Shows what is about to be reserved, and asks for the two details
-the field owner needs in order to hold it.
-
-**What is shown:** field name, address, surface and size · the chosen slot's time range · the price for
-that hour · the field's contact phone.
-
-**What the organiser enters:** their **name**, and their **phone number** (8 digits — the local format).
-
-**Validation:** both are required. An empty name, or a phone that is not 8 digits, blocks the confirm
-action and shows the message next to the input that is wrong — never as a pop-up that covers it.
-
-**What the organiser can do:** **Confirm** → Screen 3 · **Back** → Screen 1, with the filter unchanged.
+If the chosen surface matches no field, the list is replaced by the message *"No fields with that
+surface. Try another one."* The filter keeps the choice the organiser made, so they can change it
+without starting over.
 
 ---
 
-## Screen 3 — Reservation summary
+## Screen 2 — Field detail
 
-**What is shown:** the field, the address, the day and time range, the price, and the organiser's name
-and phone as entered — a summary they can screenshot or read aloud.
+### Purpose
 
-**And the action that actually secures the slot:** a **"Send this to the field"** button that opens
-WhatsApp to the field's `contactPhone`, pre-filled with the summary text.
+Give the organiser everything they need to decide on this particular field, and show which hours are
+still free.
 
-This is not a placeholder. In the first version, **the message is the reservation.** The organiser sends
-it, the owner replies, and the slot is held. The app's job today is to remove the part that actually
-wasted the organiser's time — finding out which fields have an open Saturday hour at all — not to replace
-the conversation that confirms it.
+### What the user sees
 
-**What the screen tells the organiser, in plain words:** *"Your slot is not held until the field replies.
-Send the message now."* Saying so is the difference between an honest first version and a broken one.
+- The field's name, prominently.
+- **Where it is:** neighbourhood or zone, and the full street address.
+- **What it is like:** surface type, size, rating, and the list of amenities the field offers (for
+  example: showers, parking, floodlights, cafeteria, locker rooms, spectator stands).
+- **What it costs:** the price per hour, in US dollars.
+- **The time slots.** Every slot the field has for the day, each one showing:
+  - the time range (for example, *3:00 PM – 4:00 PM*)
+  - its status, clearly distinguishable at a glance: **Free** or **Taken**
+- A short line under the slots: *"To reserve, call the field. CanchaYa does not hold slots."*
+
+### What the user does
+
+- Reads the field's information and its slots.
+- Chooses **Contact this field** to open Screen 3.
+- Chooses **Back to fields** to return to Screen 1.
+
+Slots are informative only: neither free nor taken slots can be selected, and nothing happens when
+the organiser touches one. Taken slots are shown on purpose — an organiser who sees that the 3:00 PM
+hour is already gone learns how quickly that field fills up.
+
+### Where it comes from and where it goes
+
+Reached from Screen 1 by choosing a field. Leads to Screen 3 (Contact this field), and back to
+Screen 1.
+
+### Empty state
+
+If the field has no slots at all for the day, the slot area shows *"No hours published for today.
+Call the field to ask."* — followed, as always, by the field's phone number on Screen 3. The rest of
+the field's information is still shown; an empty slot list must never make the screen look broken.
 
 ---
 
-## Edge cases and error states
+## Screen 3 — Contact this field
 
-| Situation | What happens |
+### Purpose
+
+Give the organiser the one thing that actually completes the job: how to reach the field and reserve
+the hour they chose.
+
+### What the user sees
+
+- The field's name.
+- Its **phone number**, in Guatemalan format (+502 nnnn-nnnn), shown large and easy to read aloud.
+- Its full **address** and neighbourhood, so the organiser can say where they mean and get there
+  afterwards.
+- A reminder of the field's price per hour.
+- A short instruction: *"Call this number and tell them which hour you want. CanchaYa does not
+  reserve for you."*
+
+### What the user does
+
+- Reads or dials the phone number.
+- Chooses **Back to the field** to return to Screen 2, where the slot list is.
+
+### Where it comes from and where it goes
+
+Reached only from Screen 2, for the field being viewed. Leads back to Screen 2.
+
+### Error state
+
+If the field being viewed cannot be identified — for example, the organiser arrived here without
+having chosen a field — the screen shows *"We could not find that field. Go back to the list of
+fields."* together with a way back to Screen 1, rather than a screen with blank spaces where the
+name and phone number should be.
+
+---
+
+## Navigation summary
+
+    Screen 1 — Fields  ──(choose a field)──▶  Screen 2 — Field detail
+                       ◀──(back to fields)──
+
+    Screen 2 — Field detail  ──(contact this field)──▶  Screen 3 — Contact this field
+                             ◀──(back to the field)──
+
+Screen 3 is only ever reached from Screen 2, and there is no way to reach Screens 2 or 3 without
+first choosing a field on Screen 1.
+
+## Error state that applies everywhere
+
+If the directory's information cannot be shown at all, on any screen, the organiser sees *"We could
+not load the fields right now. Please try again."* — never an empty screen, which would read as
+"there are no fields in Guatemala City".
+
+---
+
+## What this version deliberately does not do
+
+| The organiser cannot… | Because… |
 |---|---|
-| A filter matches no field | The empty state above. The filter is not reset. |
-| A slot shows available but the owner already took it by phone | The organiser finds out when the field replies. **The first version cannot prevent this** — see below. |
-| Two organisers message about the same slot | Both messages arrive; the owner decides. This version does not arbitrate. |
-| `data/fields.json` fails to load | The page shows *"Could not load the fields. Refresh the page."* — never an empty list, which would read as "there are no fields". |
-| A field has no available slots | The card still appears, with its slots shown as taken and nothing tappable. |
-
----
-
-## What v1 builds, and what waits for a back end
-
-The static pin decides this split. A page made of plain HTML, CSS and JavaScript can **read** the data
-file and react to clicks; it cannot **write** anything back, because there is nowhere to write to.
-
-| Behaviour | v1 (static, today) | Waits for a back end |
-|---|---|---|
-| Show every field with its details and rating | ✅ Built — read from `data/fields.json` | |
-| Show each field's Saturday slots and whether they are taken | ✅ Built — `status` is already in the data | |
-| Filter by surface type | ✅ Built — in the browser | |
-| Carry a chosen field and slot to Screen 2 | ✅ Built — in the browser | |
-| Validate the organiser's name and phone | ✅ Built — in the browser | |
-| Show the reservation summary | ✅ Built | |
-| **Send the reservation to the field** | ✅ Built — as a pre-filled WhatsApp message | |
-| **Record the reservation** so the slot flips to taken for the next visitor | | ⛔ Needs somewhere to store it |
-| **Prevent two people from taking the same slot** | | ⛔ Needs a server to arbitrate |
-| **Let the owner publish or update their own slots** | | ⛔ Today the owner sends them and they are edited into the data file by hand |
-| **Cancel or change a reservation in the app** | | ⛔ Today: message the field on the same thread |
-| Send a confirmation by SMS or email | | ⛔ Later |
-
-**Two consequences worth stating out loud**, because they are the honest limits of the first version and
-not oversights:
-
-1. **A slot's status only changes when the data file changes.** A reservation made through the app does
-   not flip it. Until there is a back end, availability is as fresh as the last edit to `fields.json`.
-2. **Double-booking is possible and is not prevented.** Two organisers can message about the same hour;
-   the owner resolves it. This is an accepted limitation of v1, not a defect to be patched with more
-   JavaScript.
-
-*Everything in the "waits" column is the list this flow will need once the app has a database — which is
-where the project goes next, not where it starts.*
+| Reserve a slot inside CanchaYa | This version stores nothing. Reserving is done by phone. |
+| Create an account or log in | There is nothing to store about a person. |
+| Mark a slot as taken | A slot's status is published information; the organiser cannot change it. |
+| Save a favourite field or see past searches | Nothing is remembered between visits. |
+| See more than one day of availability | Only today's published hours are shown. |
+| Leave a rating or a review | Each field's rating is shown, not collected. |
