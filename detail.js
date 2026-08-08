@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="row g-4">
                 <div class="col-lg-8">
                     <article class="detail-card">
+                        <img src="img/demo-futbol.jpg" alt="${field.name}" class="mb-4">
+                        <div class="detail-card-body">
                         <h2 class="display-5 mb-1">${field.name}</h2>
                         <p class="text-muted mb-4 fs-5">
                             <i class="bi bi-geo-alt"></i> ${field.neighborhood} &bull; ${field.address}
@@ -85,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 "Para reservar, llama a la cancha. CanchaYa no reserva espacios."
                             </p>
                         </section>
+                        </div>
                     </article>
                 </div>
                 

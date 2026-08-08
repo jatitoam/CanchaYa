@@ -51,12 +51,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             const freeSlotsCount = field.slots.filter(s => s.status === 'available').length;
             
+            let surfaceIcon = 'bi-question-circle';
+            if (field.surfaceType.toLowerCase().includes('synthetic')) surfaceIcon = 'bi-layers-half';
+            else if (field.surfaceType.toLowerCase().includes('natural')) surfaceIcon = 'bi-tree';
+            else if (field.surfaceType.toLowerCase().includes('indoor') || field.surfaceType.toLowerCase().includes('wood')) surfaceIcon = 'bi-house-door';
+
             col.innerHTML = `
                 <article class="field-card h-100">
+                    <img src="img/demo-futbol.jpg" class="card-img-top mb-3" alt="${field.name}">
                     <h2>${field.name}</h2>
                     <p class="neighborhood">${field.neighborhood}</p>
                     <div class="badge-container">
-                        <span class="surface-type">${field.surfaceType}</span>
+                        <span class="surface-type">
+                            <i class="bi ${surfaceIcon} me-1"></i>${field.surfaceType}
+                        </span>
                         <span class="ms-2 small text-muted">${field.size}</span>
                     </div>
                     <div class="mb-2">

@@ -69,14 +69,31 @@ main {
     background: white;
     border-radius: 0;
     border: 1px solid #e0e0e0;
-    padding: 1.5rem;
+    padding: 0; /* Remove padding for img-top */
     transition: box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .field-card:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.field-card .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.field-card h2, 
+.field-card .neighborhood, 
+.field-card .badge-container, 
+.field-card div:not(.badge-container), 
+.field-card p {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .field-card h2 {
@@ -112,6 +129,8 @@ main {
     color: var(--accent-amber);
     font-size: 1.25rem;
     margin-top: auto;
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
 }
 
 .field-card .slots-count {
@@ -132,8 +151,19 @@ main {
 /* Detail Screen Styles */
 .detail-card {
     background: white;
-    padding: 2rem;
+    padding: 0;
     border: 1px solid #e0e0e0;
+    overflow: hidden;
+}
+
+.detail-card-body {
+    padding: 2rem;
+}
+
+.detail-card img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
 }
 
 .info-badge {
