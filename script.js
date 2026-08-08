@@ -46,17 +46,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         fields.forEach(field => {
-            const card = document.createElement('article');
-            card.className = 'field-card';
+            const col = document.createElement('div');
+            col.className = 'col-12 col-md-6 col-lg-4';
             
-            card.innerHTML = `
-                <h2>${field.name}</h2>
-                <p class="neighborhood">${field.neighborhood}</p>
-                <p><span class="surface-type">${field.surfaceType}</span></p>
-                <p class="price">$${field.pricePerHour}/hour</p>
+            col.innerHTML = `
+                <article class="field-card h-100">
+                    <h2>${field.name}</h2>
+                    <p class="neighborhood">${field.neighborhood}</p>
+                    <div class="badge-container">
+                        <span class="surface-type">${field.surfaceType}</span>
+                    </div>
+                    <p class="price">Q${field.pricePerHour} / hr</p>
+                    <a href="#" class="contact-btn">Ver Detalles</a>
+                </article>
             `;
             
-            fieldsContainer.appendChild(card);
+            fieldsContainer.appendChild(col);
         });
     }
 });
