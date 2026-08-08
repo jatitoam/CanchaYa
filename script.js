@@ -49,15 +49,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             const col = document.createElement('div');
             col.className = 'col-12 col-md-6 col-lg-4';
             
+            const freeSlotsCount = field.slots.filter(s => s.status === 'available').length;
+            
             col.innerHTML = `
                 <article class="field-card h-100">
                     <h2>${field.name}</h2>
                     <p class="neighborhood">${field.neighborhood}</p>
                     <div class="badge-container">
                         <span class="surface-type">${field.surfaceType}</span>
+                        <span class="ms-2 small text-muted">${field.size}</span>
                     </div>
-                    <p class="price">Q${field.pricePerHour} / hr</p>
-                    <a href="#" class="contact-btn">Ver Detalles</a>
+                    <div class="mb-2">
+                        <span class="text-warning">★</span> ${field.rating}
+                    </div>
+                    <p class="slots-count fw-bold"><span class="badge bg-accent">${freeSlotsCount} slots libres</span></p>
+                    <p class="price">$${field.pricePerHour} / hr</p>
+                    <a href="field-detail.html?id=${field.id}" class="contact-btn">Ver Detalles</a>
                 </article>
             `;
             

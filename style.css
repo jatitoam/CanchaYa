@@ -114,6 +114,83 @@ main {
     margin-top: auto;
 }
 
+.field-card .slots-count {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.bg-accent {
+    background-color: var(--accent-amber) !important;
+    color: #000 !important;
+}
+
+.text-accent {
+    color: var(--accent-amber) !important;
+}
+
+/* Detail Screen Styles */
+.detail-card {
+    background: white;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+}
+
+.info-badge {
+    background: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 4px;
+    height: 100%;
+}
+
+.info-badge small {
+    display: block;
+    font-size: 0.7rem;
+    color: #888;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.info-badge div {
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.info-badge.highlight div {
+    color: var(--accent-amber);
+}
+
+.amenity-tag {
+    background: #e8f5e9;
+    color: var(--primary-green);
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.contact-sidebar {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-top: 5px solid var(--primary-green);
+}
+
+.contact-sidebar .btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    font-family: var(--heading-font);
+    letter-spacing: 0.5px;
+}
+
+.contact-sidebar .btn-primary:hover {
+    background-color: #144617;
+    border-color: #144617;
+}
+
+.slot-time {
+    font-size: 1.1rem;
+}
+
 /* Contact button or link placeholder */
 .contact-btn {
     display: block;
