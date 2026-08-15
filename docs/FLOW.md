@@ -15,3 +15,15 @@ Screen 1 — Fields  ──(choose a field)──▶  Screen 2 — Field detail
 Screen 2 — Field detail  ──(contact this field)──▶  Screen 3 — Contact this field
                          ◀──(back to the field)──
 ```
+
+
+
+# <Your venture name> — Navigation Flow
+
+| | <Screen 1 name> (home) | <Screen 2 name> |
+|---|---|---|
+| **Purpose** | | |
+| **Information shown** | | |
+| **Actions** | | |
+| **Navigation** | | |
+| **Empty / error state** | | |
