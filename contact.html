@@ -74,14 +74,7 @@
         </div>
     </main>
 
-    <!-- Supabase Library -->
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-
-        const supabaseUrl = 'https://cceshuvaqcnqahckqnkd.supabase.co'
-        const supabaseKey = 'sb_publishable_4IKEyDSOUoc3O8sdq1V3gA_w2pumpSm'
-        const supabase = createClient(supabaseUrl, supabaseKey)
-
+    <script>
         const contactForm = document.getElementById('contact-form');
         const thankYou = document.getElementById('thank-you');
         const alertContainer = document.getElementById('alert-container');
@@ -104,17 +97,22 @@
             };
 
             try {
-                const { error } = await supabase
-                    .from('mensajes_contacto')
-                    .insert([data]);
+                const response = await fetch('/api/contacto', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
 
-                if (error) throw error;
+                if (!response.ok) {
+                    const result = await response.json().catch(() => ({}));
+                    throw new Error(result.error || 'No se pudo enviar el mensaje. Por favor intenta de nuevo.');
+                }
 
                 // Success
                 contactForm.classList.add('d-none');
                 thankYou.classList.remove('d-none');
             } catch (error) {
-                console.error('Error saving to Supabase:', error);
+                console.error('Error sending contact request:', error);
                 alertContainer.innerHTML = `
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <strong>Error:</strong> ${error.message || 'No se pudo enviar el mensaje. Por favor intenta de nuevo.'}
