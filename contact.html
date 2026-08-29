@@ -41,19 +41,19 @@
                         <form id="contact-form">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label fw-bold">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100" required>
                             </div>
                             <div class="mb-3">
                                 <label for="telefono" class="form-label fw-bold">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" maxlength="20" required>
                             </div>
                             <div class="mb-3">
                                 <label for="cancha" class="form-label fw-bold">Cancha</label>
-                                <input type="text" class="form-control" id="cancha" name="cancha" required>
+                                <input type="text" class="form-control" id="cancha" name="cancha" maxlength="120">
                             </div>
                             <div class="mb-3">
                                 <label for="hora_solicitada" class="form-label fw-bold">Hora Solicitada</label>
-                                <input type="text" class="form-control" id="hora_solicitada" name="hora_solicitada" placeholder="Ej: Sábado 18:00" required>
+                                <input type="text" class="form-control" id="hora_solicitada" name="hora_solicitada" maxlength="8" pattern="(?:[1-9]|0[1-9]|1[0-2]):[0-5][0-9] (?:AM|PM)" placeholder="Ej: 9:00 PM" title="Usa el formato 9:00 PM o 09:00 PM" required>
                             </div>
                             <div class="d-grid mt-4">
                                 <button type="submit" class="btn btn-success py-2 fw-bold" id="submit-btn">
@@ -99,7 +99,7 @@
             const data = {
                 nombre: formData.get('nombre'),
                 telefono: formData.get('telefono'),
-                cancha: formData.get('cancha'),
+                cancha: formData.get('cancha').trim() || null,
                 hora_solicitada: formData.get('hora_solicitada')
             };
 
