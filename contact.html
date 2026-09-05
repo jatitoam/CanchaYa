@@ -33,7 +33,7 @@
                 <div class="card border-0 shadow-sm overflow-hidden">
                     <img src="img/demo-futbol.jpg" alt="Canchas de fútbol" class="card-img-top object-fit-cover" style="height: 200px;">
                     <div class="card-header bg-success text-white py-3">
-                        <h2 class="h4 mb-0 text-white">Formulario de Contacto</h2>
+                        <h2 class="h4 mb-0 text-white">Consulta sobre una reserva existente</h2>
                     </div>
                     <div class="card-body p-4">
                         <div id="alert-container"></div>
@@ -52,12 +52,12 @@
                                 <input type="text" class="form-control" id="cancha" name="cancha" maxlength="120">
                             </div>
                             <div class="mb-3">
-                                <label for="hora_solicitada" class="form-label fw-bold">Hora Solicitada</label>
+                                <label for="hora_solicitada" class="form-label fw-bold">Hora de tu reserva</label>
                                 <input type="text" class="form-control" id="hora_solicitada" name="hora_solicitada" maxlength="8" pattern="(?:[1-9]|0[1-9]|1[0-2]):[0-5][0-9] (?:AM|PM)" placeholder="Ej: 9:00 PM" title="Usa el formato 9:00 PM o 09:00 PM" required>
                             </div>
                             <div class="d-grid mt-4">
                                 <button type="submit" class="btn btn-success py-2 fw-bold" id="submit-btn">
-                                    ENVIAR SOLICITUD
+                                    ENVIAR CONSULTA
                                 </button>
                             </div>
                         </form>
@@ -120,7 +120,7 @@
                     </div>
                 `;
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'ENVIAR SOLICITUD';
+                submitBtn.innerHTML = 'ENVIAR CONSULTA';
             }
         });
     </script>

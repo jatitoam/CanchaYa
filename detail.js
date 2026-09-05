@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderFieldDetail(field) {
-        const freeSlotsCount = field.slots.filter(s => s.status === 'available').length;
+        document.getElementById('field-contact-link').href = `contact.html?id=${encodeURIComponent(field.id)}`;
         
         contentContainer.innerHTML = `
             <div class="row g-4">
@@ -82,10 +82,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         <section class="slots-section">
                             <h3 class="h4 mb-3">Horarios disponibles para hoy</h3>
-                            ${renderSlots(field.slots)}
-                            <p class="mt-4 text-muted fst-italic">
-                                "Para reservar, llama a la cancha. CanchaYa no reserva espacios."
-                            </p>
+                            ${renderSlots(field)}
+
                         </section>
                         </div>
                     </article>
@@ -93,32 +91,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 <div class="col-lg-4">
                     <aside class="contact-sidebar p-4 sticky-top" style="top: 2rem;">
-                        <h3 class="h5 mb-3">¿Listo para jugar?</h3>
-                        <p class="mb-4">Consulta disponibilidad y reserva directamente con la cancha.</p>
-                        <a href="contact.html?id=${field.id}" class="btn btn-primary w-100 py-3 fw-bold">CONTACTAR A ESTA CANCHA</a>
+                        <h3 class="h5 mb-3">¿Ya tienes una reserva?</h3>
+                        <p class="mb-4">Contacta a la cancha para consultar sobre tu reserva existente.</p>
+                        <p>Teléfono: <a href="tel:${field.contactPhone.replace(/[^+0-9]/g, '')}">${field.contactPhone}</a></p>
+                        <a href="contact.html?id=${encodeURIComponent(field.id)}" class="btn btn-primary w-100 py-3 fw-bold">CONTACTAR A ESTA CANCHA</a>
                     </aside>
                 </div>
             </div>
         `;
     }
 
-    function renderSlots(slots) {
-        if (!slots || slots.length === 0) {
+    function renderSlots(field) {
+        if (!field.slots || field.slots.length === 0) {
             return `<div class="alert alert-info">No hay horarios publicados para hoy. Llama a la cancha para preguntar.</div>`;
         }
 
-        return `
-            <div class="list-group">
-                ${slots.map(slot => `
-                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
-                        <span class="slot-time fw-bold">${slot.time}</span>
-                        <span class="badge ${slot.status === 'available' ? 'bg-accent' : 'bg-secondary'} rounded-pill px-3 py-2">
-                            ${slot.status === 'available' ? 'DISPONIBLE' : 'OCUPADO'}
-                        </span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
+        return `<div class="list-group">${field.slots.map(slot => {
+            const available = slot.status === 'available';
+            const tag = available ? 'a' : 'div';
+            const href = available
+                ? ` href="booking.html?id=${encodeURIComponent(field.id)}&slot=${encodeURIComponent(slot.id)}"`
+                : '';
+            return `<${tag}${href} class="list-group-item ${available ? 'list-group-item-action' : ''} d-flex justify-content-between align-items-center py-3">
+                <span class="slot-time fw-bold">${slot.time}</span>
+                <span class="badge ${available ? 'bg-accent' : 'bg-secondary'} rounded-pill px-3 py-2">
+                    ${available ? 'RESERVAR' : 'OCUPADO'}
+                </span>
+            </${tag}>`;
+        }).join('')}</div>`;
     }
 
     function showError(message) {

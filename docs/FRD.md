@@ -1,164 +1,62 @@
 # Functional Requirements Document (FRD) — CanchaYa
 
-## Core feature
+## Scope
 
-Find a field and see its available time slots.
-
-## Context
-
-CanchaYa is a directory of soccer and futsal fields in Guatemala City. The directory currently holds
-five fields. This document describes what the organiser sees and does on each screen, and how the
-screens connect to each other.
-
-**Scope boundary — read this first.** This first version does not save anything. There are no
-accounts, no login and no reservation button. The organiser browses, reads and decides; reserving is
-done by phone, using the number shown on the field's screen. Nothing the organiser does on one visit
-is remembered on the next.
-
----
+Browse fields, start a booking from an available slot, and review it. The booking flow ends at
+review: no submit action, API write, browser storage, slot hold, availability mutation or success
+confirmation. Existing contact inquiries retain their separate submission behavior.
 
 ## Screen 1 — Fields (home)
 
-### Purpose
-
-The entry point. Show every field in the directory at a glance, and let the organiser narrow the
-list down to the kind of field they are looking for.
-
-### What the user sees
-
-- The CanchaYa name at the top of the screen.
-- A filter labelled **Surface**, offering **All** plus each surface type in the directory: Indoor
-  Wood, Natural Grass, Synthetic Grass.
-- One entry per field, and each entry shows:
-  - Field name
-  - Neighbourhood or zone (for example, *Zona 10*)
-  - Surface type
-  - Size (for example, *7-a-side*)
-  - Price per hour, in US dollars
-  - Rating
-  - How many of its time slots are still free (for example, *3 free slots*)
-
-### What the user does
-
-- Chooses a surface in the filter. The list immediately shows only the fields with that surface.
-  Choosing **All** brings back the full list.
-- Chooses a field. This opens Screen 2 for that field.
-
-### Where it goes
-
-Every field entry leads to **Screen 2 — Field detail**, for the field chosen.
-
-### Empty state
-
-If the chosen surface matches no field, the list is replaced by the message *"No fields with that
-surface. Try another one."* The filter keeps the choice the organiser made, so they can change it
-without starting over.
-
----
+Show all fields with name, neighbourhood, surface, size, hourly price (USD), rating and free-slot
+count. Filter by surface (All, Indoor Wood, Natural Grass, Synthetic Grass). Choosing a field
+opens its detail page. An empty filter result explains that no fields match and keeps the filter
+available. Data-load failures show an error rather than an empty directory.
 
 ## Screen 2 — Field detail
 
-### Purpose
+Show name, neighbourhood, address, surface, size, rating, amenities, hourly price and the field's
+phone number as a callable link. Show today's published time ranges and availability.
 
-Give the organiser everything they need to decide on this particular field, and show which hours are
-still free.
+- Each available slot is a keyboard-accessible link labelled RESERVAR, opening Screen 3 with the
+  field ID and exact slot ID. This is the entry point for a new booking.
+- Taken slots show OCUPADO and cannot start a booking.
+- Contact this field remains reachable for every field, including fields with no available slots,
+  and opens Screen 4 for questions about an existing booking.
+- Back to fields returns to Screen 1.
+- Remove the previous instruction saying CanchaYa does not reserve spaces.
 
-### What the user sees
+If no slots are published, explain that and suggest calling; keep the phone and contact link
+visible. If all slots are taken, show them as taken. An unknown field shows an error and a link
+back to the directory.
 
-- The field's name, prominently.
-- **Where it is:** neighbourhood or zone, and the full street address.
-- **What it is like:** surface type, size, rating, and the list of amenities the field offers (for
-  example: showers, parking, floodlights, cafeteria, locker rooms, spectator stands).
-- **What it costs:** the price per hour, in US dollars.
-- **The time slots.** Every slot the field has for the day, each one showing:
-  - the time range (for example, *3:00 PM – 4:00 PM*)
-  - its status, clearly distinguishable at a glance: **Free** or **Taken**
-- A short line under the slots: *"To reserve, call the field. CanchaYa does not hold slots."*
+## Screen 3 — Booking review
 
-### What the user does
+Resolve the field ID and slot ID against the local JSON. The slot must belong to that field and
+still have status available. Do not accept field names, times or prices from URL parameters.
 
-- Reads the field's information and its slots.
-- Chooses **Contact this field** to open Screen 3.
-- Chooses **Back to fields** to return to Screen 1.
+Show the field name, exact selected time range for today, and hourly price with currency from the
+field data. Current published slots are one hour. These details are not editable; the organiser
+never retypes the field or time. Ask only for name (text, maximum 100 characters) and phone (tel,
+maximum 20 characters), both labelled and required for the future booking submission.
 
-Slots are informative only: neither free nor taken slots can be selected, and nothing happens when
-the organiser touches one. Taken slots are shown on purpose — an organiser who sees that the 3:00 PM
-hour is already gone learns how quickly that field fills up.
+This is the final screen for now. It has no submission control or form navigation and clearly says
+the booking has not been sent or confirmed. Personal details stay in the displayed inputs only.
+Back to the field lets the organiser choose a different slot.
 
-### Where it comes from and where it goes
+Missing, unknown, mismatched or taken slots must not display an actionable review. Show an error
+with navigation back to the identified field, or to the directory when the field is unknown.
+A loading failure shows a retry message. Refresh resolves the selection again from the URL and JSON.
 
-Reached from Screen 1 by choosing a field. Leads to Screen 3 (Contact this field), and back to
-Screen 1.
+## Screen 4 — Contact this field
 
-### Empty state
+The existing contact form handles questions about a booking the organiser already has. It remains
+separate from new booking review, reachable from every detail page and existing directory links.
+It asks for name, phone, optional field name and the time of the existing booking, and retains its
+existing /api/contacto submission, validation, success and error behavior. It does not create a
+booking or change availability.
 
-If the field has no slots at all for the day, the slot area shows *"No hours published for today.
-Call the field to ask."* — followed, as always, by the field's phone number on Screen 3. The rest of
-the field's information is still shown; an empty slot list must never make the screen look broken.
+## Exclusions
 
----
-
-## Screen 3 — Contact this field
-
-### Purpose
-
-Give the organiser the one thing that actually completes the job: how to reach the field and reserve
-the hour they chose.
-
-### What the user sees
-
-- The field's name.
-- Its **phone number**, in Guatemalan format (+502 nnnn-nnnn), shown large and easy to read aloud.
-- Its full **address** and neighbourhood, so the organiser can say where they mean and get there
-  afterwards.
-- A reminder of the field's price per hour.
-- A short instruction: *"Call this number and tell them which hour you want. CanchaYa does not
-  reserve for you."*
-
-### What the user does
-
-- Reads or dials the phone number.
-- Chooses **Back to the field** to return to Screen 2, where the slot list is.
-
-### Where it comes from and where it goes
-
-Reached only from Screen 2, for the field being viewed. Leads back to Screen 2.
-
-### Error state
-
-If the field being viewed cannot be identified — for example, the organiser arrived here without
-having chosen a field — the screen shows *"We could not find that field. Go back to the list of
-fields."* together with a way back to Screen 1, rather than a screen with blank spaces where the
-name and phone number should be.
-
----
-
-## Navigation summary
-
-    Screen 1 — Fields  ──(choose a field)──▶  Screen 2 — Field detail
-                       ◀──(back to fields)──
-
-    Screen 2 — Field detail  ──(contact this field)──▶  Screen 3 — Contact this field
-                             ◀──(back to the field)──
-
-Screen 3 is only ever reached from Screen 2, and there is no way to reach Screens 2 or 3 without
-first choosing a field on Screen 1.
-
-## Error state that applies everywhere
-
-If the directory's information cannot be shown at all, on any screen, the organiser sees *"We could
-not load the fields right now. Please try again."* — never an empty screen, which would read as
-"there are no fields in Guatemala City".
-
----
-
-## What this version deliberately does not do
-
-| The organiser cannot… | Because… |
-|---|---|
-| Reserve a slot inside CanchaYa | This version stores nothing. Reserving is done by phone. |
-| Create an account or log in | There is nothing to store about a person. |
-| Mark a slot as taken | A slot's status is published information; the organiser cannot change it. |
-| Save a favourite field or see past searches | Nothing is remembered between visits. |
-| See more than one day of availability | Only today's published hours are shown. |
-| Leave a rating or a review | Each field's rating is shown, not collected. |
+No booking persistence or confirmation, payments, accounts, favourites, owner editing, new ratings,
+or additional days of availability are introduced.

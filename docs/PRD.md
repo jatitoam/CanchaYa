@@ -4,7 +4,8 @@
 
 CanchaYa is a directory of soccer and futsal fields in Guatemala City. A player who wants to
 organise a match opens CanchaYa, looks through the fields, opens the one that interests them, and
-sees which hours are still free that day. Reserving is done by calling the field directly.
+sees which hours are still free that day. A booking starts by selecting an available slot and reviewing the field, exact time and price.
+This release ends at review; no booking is saved or confirmed.
 
 ## Problem
 
@@ -29,7 +30,7 @@ themselves; their information is published for them.
 ## Job to be done
 
 *"When I have to find a field for tonight's match, I want to see in one place which fields exist,
-what they cost and which hours are free, so that I can make one phone call instead of five."*
+what they cost and which hours are free, so that I can select a suitable slot without retyping the field or time."*
 
 ## Core features
 
@@ -38,15 +39,19 @@ what they cost and which hours are free, so that I can make one phone call inste
   Synthetic Grass).
 - A detail view for each field showing everything the organiser needs to decide: address,
   neighbourhood, surface, size, price per hour, rating and amenities.
-- The field's time slots, each one clearly marked as free or already taken.
-- The field's phone number, visible, so the organiser can call and reserve.
+- Available slots are selectable booking entry points; taken slots remain visible and inert.
+- A review screen carries the selected field and exact slot automatically, displays the price,
+  and asks only for the organiser's name and phone.
+- The field's phone number is visible and callable on its detail page.
+- Every field keeps a contact-form link for inquiries about an existing booking.
 
 ## Out of scope
 
-This first version is a directory that shows information. It does not save anything, and that is a
-deliberate decision, not something missing.
+The new booking flow ends at review. It does not submit, persist personal details, hold a slot or
+change availability. The existing contact form remains a separate inquiry flow with its existing
+submission behavior.
 
-- **Reserving inside CanchaYa.** The organiser reserves by phone. CanchaYa shows the number.
+- **Saving or confirming bookings.** A destination for booking writes will be added separately.
 - **User accounts, sign-up or login.** There is nothing to log in to.
 - **Anything the app has to remember** — favourites, history, saved searches, a slot that stays
   marked as taken because someone chose it.
@@ -58,9 +63,9 @@ deliberate decision, not something missing.
 ## Success criteria
 
 - An organiser who opens CanchaYa for the first time finds a field that suits them and gets to its
-  phone number in under one minute, without help.
+  booking review in under one minute, without help.
 - At least 7 out of 10 people we test with can explain, without being told, which hours are free at
   a given field.
-- Organisers tell us they called one field instead of five. That is the behaviour CanchaYa replaces
-  and the one worth measuring.
+- Organisers reach review with the exact field and slot they selected and never retype either.
+- No booking data is written and no selected slot changes status.
 - At least three field owners ask to be added to the directory in the first month.

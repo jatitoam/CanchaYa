@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanchaYa - Revisar reserva</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/favicon.svg">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="py-4 mb-4"><div class="container text-center"><h1>CanchaYa</h1></div></header>
+    <main class="container mb-5" style="max-width: 640px;">
+        <a id="back-to-field" href="index.html" class="btn btn-outline-dark mb-4">&larr; Volver a canchas</a>
+        <h2>Revisar reserva</h2>
+        <p id="booking-status" role="status">Cargando...</p>
+        <section id="booking-review" class="card card-body" hidden>
+            <dl>
+                <dt>Cancha</dt><dd id="booking-field"></dd>
+                <dt>Horario de hoy</dt><dd id="booking-time"></dd>
+                <dt>Precio por hora</dt><dd id="booking-price" class="fw-bold text-accent"></dd>
+            </dl>
+            <div class="mb-3">
+                <label for="booking-name" class="form-label">Nombre</label>
+                <input id="booking-name" type="text" class="form-control" maxlength="100" autocomplete="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="booking-phone" class="form-label">Teléfono</label>
+                <input id="booking-phone" type="tel" class="form-control" maxlength="20" autocomplete="tel" required>
+            </div>
+            <p class="mb-0">Revisa los datos. Tu reserva aún no se ha enviado ni confirmado.</p>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="booking.js"></script>
+</body>
+</html>
