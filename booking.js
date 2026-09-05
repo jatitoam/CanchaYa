@@ -53,7 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     throw new Error('No pudimos verificar el resultado. Contacta a la cancha antes de intentar de nuevo.');
                 }
                 document.getElementById('confirmation-number').textContent = result.booking_number;
-                document.getElementById('confirmation-status').textContent = result.status;
+                document.getElementById('confirmation-status').textContent = {
+                    pending: 'Pendiente', confirmed: 'Confirmada', cancelled: 'Cancelada'
+                }[result.status];
                 document.getElementById('booking-heading').textContent = 'Resultado de tu reserva';
                 form.hidden = true;
                 const confirmation = document.getElementById('booking-confirmation');

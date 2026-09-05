@@ -39,7 +39,7 @@ globalThis.fetch = async () => ({ ok: false });
 assert.equal((await call(body)).code, 502);
 
 // Exercise the page with deliberately different returned statuses: never hardcode pending.
-for (const returnedStatus of ['pending', 'confirmed', 'cancelled']) {
+for (const [returnedStatus, expectedLabel] of [['pending', 'Pendiente'], ['confirmed', 'Confirmada'], ['cancelled', 'Cancelada']]) {
   const elements = {};
   let ready;
   const requests = [];
@@ -64,7 +64,7 @@ for (const returnedStatus of ['pending', 'confirmed', 'cancelled']) {
   await ready();
   await elements['booking-review'].submit({ preventDefault() {} });
   assert.equal(elements['confirmation-number'].textContent, 982);
-  assert.equal(elements['confirmation-status'].textContent, returnedStatus);
+  assert.equal(elements['confirmation-status'].textContent, expectedLabel);
   assert.equal(elements['booking-confirmation'].hidden, false);
   await elements['booking-review'].submit({ preventDefault() {} });
   assert.deepEqual(requests, ['./data/fields.json', '/api/bookings']);
