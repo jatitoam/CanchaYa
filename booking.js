@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const status = document.getElementById('booking-status');
     const back = document.getElementById('back-to-field');
 
+    const bookingDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Guatemala' }).format(new Date());
+
     try {
         const response = await fetch('./data/fields.json');
         if (!response.ok) throw new Error('Could not load fields');
@@ -25,7 +27,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             style: 'currency', currency: field.currency
         }).format(field.pricePerHour);
         status.hidden = true;
-        document.getElementById('booking-review').hidden = false;
+        const form = document.getElementById('booking-review');
+        const submit = document.getElementById('booking-submit');
+        form.hidden = false;
+        let saving = false;
+        form.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (saving || !form.reportValidity()) return;
+            saving = true;
+            submit.disabled = true;
+            status.hidden = true;
+            try {
+                const response = await fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        field_id: field.id, slot_id: slot.id, booking_date: bookingDate,
+                        organizer_name: document.getElementById('booking-name').value.trim(),
+                        organizer_phone: document.getElementById('booking-phone').value.trim()
+                    })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'No se pudo guardar la reserva.');
+                if (!result.booking_number || !['pending', 'confirmed', 'cancelled'].includes(result.status)) {
+                    throw new Error('No pudimos verificar el resultado. Contacta a la cancha antes de intentar de nuevo.');
+                }
+                document.getElementById('confirmation-number').textContent = result.booking_number;
+                document.getElementById('confirmation-status').textContent = result.status;
+                document.getElementById('booking-heading').textContent = 'Resultado de tu reserva';
+                form.hidden = true;
+                const confirmation = document.getElementById('booking-confirmation');
+                confirmation.hidden = false;
+                confirmation.focus();
+            } catch (error) {
+                status.textContent = error.message || 'No pudimos verificar el resultado. Contacta a la cancha antes de intentar de nuevo.';
+                status.hidden = false;
+                saving = false;
+                submit.disabled = false;
+            }
+        });
     } catch (error) {
         status.textContent = 'No pudimos cargar los datos en este momento. Por favor intenta de nuevo.';
     }

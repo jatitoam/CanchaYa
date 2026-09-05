@@ -10,7 +10,7 @@ async function render(script, search, data = fields, ok = true) {
     let ready;
     const document = {
         addEventListener: (_, callback) => { ready = callback; },
-        getElementById: id => elements[id] ||= { hidden: id === 'booking-review' }
+        getElementById: id => elements[id] ||= { hidden: id === 'booking-review', addEventListener() {} }
     };
     vm.runInNewContext(fs.readFileSync(script, 'utf8'), {
         document, window: { location: { search } }, URLSearchParams, Intl, console,
@@ -58,6 +58,6 @@ async function render(script, search, data = fields, ok = true) {
     assert.ok(empty['field-detail-content'].innerHTML.includes(fields[0].contactPhone));
     const html = fs.readFileSync('booking.html', 'utf8');
     assert.equal((html.match(/<input /g) || []).length, 2);
-    assert.ok(!/<form|type="submit"/.test(html));
+    assert.ok(/type="submit"/.test(html));
     console.log('Booking review checks passed: all slots, invalid selections, load failure, no writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -20,9 +20,9 @@
     <header class="py-4 mb-4"><div class="container text-center"><h1>CanchaYa</h1></div></header>
     <main class="container mb-5" style="max-width: 640px;">
         <a id="back-to-field" href="index.html" class="btn btn-outline-dark mb-4">&larr; Volver a canchas</a>
-        <h2>Revisar reserva</h2>
+        <h2 id="booking-heading">Revisar reserva</h2>
         <p id="booking-status" role="status">Cargando...</p>
-        <section id="booking-review" class="card card-body" hidden>
+        <form id="booking-review" class="card card-body" hidden>
             <dl>
                 <dt>Cancha</dt><dd id="booking-field"></dd>
                 <dt>Horario de hoy</dt><dd id="booking-time"></dd>
@@ -36,7 +36,16 @@
                 <label for="booking-phone" class="form-label">Teléfono</label>
                 <input id="booking-phone" type="tel" class="form-control" maxlength="20" autocomplete="tel" required>
             </div>
-            <p class="mb-0">Revisa los datos. Tu reserva aún no se ha enviado ni confirmado.</p>
+            <p>Revisa los datos. Tu reserva se guardará como pendiente.</p>
+            <button id="booking-submit" type="submit" class="btn btn-success">GUARDAR RESERVA</button>
+        </form>
+        <section id="booking-confirmation" class="card card-body" tabindex="-1" hidden>
+            <h3>Reserva recibida</h3>
+            <dl>
+                <dt>Número de reserva</dt><dd id="confirmation-number"></dd>
+                <dt>Estado</dt><dd id="confirmation-status"></dd>
+            </dl>
+            <p>La solicitud fue guardada. Consulta el estado de tu reserva arriba.</p>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
