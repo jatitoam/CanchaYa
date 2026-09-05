@@ -32,9 +32,15 @@
     const open = widget.querySelector('#chat-open');
     let pending = false;
 
-    open.addEventListener('click', () => dialog.showModal());
+    open.addEventListener('click', () => dialog.show());
     widget.querySelector('#chat-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('close', () => open.focus());
+    dialog.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            dialog.close();
+        }
+    });
 
     function addMessage(text, fromVisitor = false) {
         const message = document.createElement('p');
@@ -73,7 +79,6 @@
             pending = false;
             send.disabled = false;
             input.readOnly = false;
-            if (dialog.open) input.focus();
         }
     });
 })();

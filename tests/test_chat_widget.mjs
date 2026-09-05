@@ -10,7 +10,8 @@ class Element {
     addEventListener(name, callback) { this.listeners[name] = callback; }
     append(child) { this.children.push(child); }
     focus() { this.focused = true; }
-    showModal() { this.open = true; }
+    show() { this.open = true; }
+    showModal() { throw new Error('Chat must not block the page'); }
     close() { this.open = false; this.listeners.close(); }
 }
 const elements = new Map();
@@ -33,6 +34,9 @@ get('close').listeners.click();
 assert.equal(get('dialog').open, false);
 assert.equal(get('open').focused, true);
 get('open').listeners.click();
+get('dialog').listeners.keydown({ key: 'Escape', preventDefault() {} });
+assert.equal(get('dialog').open, false);
+get('open').listeners.click();
 get('input').value = '   ';
 await submit();
 assert.equal(get('messages').children.length, 0);
@@ -51,8 +55,10 @@ const sending = submit();
 assert.equal(get('send').disabled, true);
 await submit();
 assert.equal(calls, 1);
+get('input').focused = false; // Visitor moved focus to the page while waiting.
 release();
 await sending;
+assert.equal(get('input').focused, false);
 assert.equal(get('messages').children.at(-1).textContent, 'CanchaYa: <img src=x onerror=alert(1)>');
 assert.equal(get('messages').children.at(-1).innerHTML, undefined);
 assert.equal(get('input').value, '');

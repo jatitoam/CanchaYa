@@ -259,6 +259,7 @@ main {
 
 .chat-dialog {
     position: fixed;
+    z-index: 1031;
     inset: auto 1rem max(1rem, env(safe-area-inset-bottom)) auto;
     margin: 0;
     padding: 0;
@@ -274,7 +275,6 @@ main {
 }
 
 .chat-dialog[open] { display: flex; flex-direction: column; }
-.chat-dialog::backdrop { background: #0005; }
 .chat-heading {
     display: flex;
     align-items: center;
